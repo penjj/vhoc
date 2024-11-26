@@ -26,20 +26,25 @@ export function withInject<
   return <T extends Props>(
     injectionKey: InjectionKey<T> | string,
   ) => {
+    let injection: T | undefined
+
     return createWrapper(Component, {
       mergeExpose,
       name: 'withInject',
     }, {
+      mapContext(context) {
+        injection = inject(injectionKey)
+        return context
+      },
       mapProps(__props) {
         const props = unref(__props)
-        const injection = inject(injectionKey)
         const actualProps: Record<string, any> = {}
         for (const key in props) {
           if (typeof props[key] !== 'undefined')
             actualProps[key] = props[key]
         }
         return computed(() => ({
-          ...injection,
+          ...(injection || {}),
           ...actualProps,
         }))
       },

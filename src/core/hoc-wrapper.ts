@@ -11,7 +11,7 @@ import type {
   ComponentProps,
   ComponentSlots,
 } from 'vue-component-type-helpers'
-import { defineComponent, h, unref } from '@vue/runtime-core'
+import { computed, defineComponent, h, unref } from '@vue/runtime-core'
 import { type Component, type ExposeOptions, mergeProps } from './utils.ts'
 
 export interface WrapComponentOptions extends ExposeOptions {
@@ -60,7 +60,7 @@ export function createWrapper<
         context = mapContext(context)
 
       if (mapProps)
-        props = mapProps(__props, context)
+        props = computed(() => unref(mapProps(__props, context)))
 
       if (mapSlots)
         slots = mapSlots(unref(props), context)
