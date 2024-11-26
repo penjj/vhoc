@@ -1,5 +1,6 @@
 import type {
   ComponentObjectPropsOptions,
+  MaybeRef,
   MaybeRefOrGetter,
   Slots,
   VNode,
@@ -19,9 +20,10 @@ export interface WrapComponentOptions extends ExposeOptions {
 }
 
 interface HocOptions {
-  mapRender?: (component: any, props: any, context: any) => VNode
-  mapProps?: (props: any, context: any) => MaybeRefOrGetter<any>
+  mapContext?: (context: any) => any
   mapSlots?: (props: any, context: any) => any
+  mapRender?: (component: any, props: any, context: any) => VNode
+  mapProps?: (props: MaybeRefOrGetter<any>, context: any) => MaybeRefOrGetter<any>
 }
 
 export function createWrapper<
@@ -41,24 +43,34 @@ export function createWrapper<
     mapRender,
     mapProps,
     mapSlots,
+    mapContext,
   }: HocOptions = {},
 ) {
   return defineComponent({
     props: mergeProps(Component.props as any, props),
     name: `Vhoc_${name}`,
-    setup(props, context) {
+    setup(__props, context) {
       let slots: Slots | undefined = context.slots as any
+      let props: MaybeRef = __props
+
       if (mapRender)
-        return () => mapRender(Component, props, slots)
+        return () => mapRender(Component, __props, slots)
+
+      if (mapContext)
+        context = mapContext(context)
+
+      if (mapProps)
+        props = mapProps(__props, context)
+
+      if (mapSlots)
+        slots = mapSlots(unref(props), context)
 
       return () => {
-        if (mapProps)
-          props = mapProps(props, context)
-
-        if (mapSlots)
-          slots = mapSlots(props, context)
-
-        return h(Component, unref(props), unref(slots))
+        const finallyProps = {
+          ...unref(props),
+          ...context.attrs,
+        }
+        return h(Component, finallyProps, unref(slots))
       }
     },
   }) as Component<InferProps, InferExposed, InferEmits, InferSlots>

@@ -24,7 +24,7 @@ it('with props test', async () => {
     },
   })
   expect(wrapper1.html()).toMatchInlineSnapshot(
-    `"<input placeholder="Hello" type="text">"`,
+    `"<input type="text" placeholder="Hello">"`,
   )
 
   const wrapper2 = mount(component, {
@@ -34,6 +34,6 @@ it('with props test', async () => {
     },
   })
   expect(wrapper2.html()).toMatchInlineSnapshot(
-    `"<input placeholder="world" type="password">"`,
+    `"<input type="password" placeholder="world">"`,
   )
 })

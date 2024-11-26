@@ -1,5 +1,6 @@
-import type { Component, ExposeOptions } from './utils.ts'
+import { unref } from '@vue/runtime-core'
 import { createWrapper } from './hoc-wrapper.ts'
+import { type Component, type ExposeOptions, ownKeys } from './utils.ts'
 
 export type WithModelOptions<T> = Record<string, {
   get: (value: T) => T
@@ -31,24 +32,34 @@ export function withModel<T extends Component>(
 ) {
   return (options: WithModelOptions<any>) => {
     const mappedProps = Object.keys(options)
+    if (!mappedProps.length)
+      return Component
+
+    const models = ownKeys(options)
+    const updateEvents = models.map(i => `onUpdate:${String(i)}`)
 
     return createWrapper(Component, {
       mergeExpose,
       name: 'withModel',
     }, {
+      mapContext({ attrs, ...ctx }) {
+        const fullAttrs: string[] = ownKeys(attrs) as any
+        const newAttrs: Record<string, any> = {}
+        fullAttrs.forEach((evt) => {
+          if (!updateEvents.includes(String(evt))) {
+            newAttrs[evt] = attrs[evt]
+          }
+        })
+        return { ...ctx, attrs: newAttrs }
+      },
       mapProps(props, context) {
-        if (!mappedProps.length)
-          return props
-
-        const ret = { ...props }
-
+        const ret = { ...unref(props) }
         Object.entries(options).forEach(([model, modelProxy]) => {
           ret[model] = modelProxy.get(ret[model])
           ret[`onUpdate:${model}`] = (v: any) => {
             context.emit(`update:${model}`, modelProxy.set(v))
           }
         })
-
         return ret
       },
     })

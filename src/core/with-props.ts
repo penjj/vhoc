@@ -1,4 +1,5 @@
 import type { ComponentExposed } from 'vue-component-type-helpers'
+import { unref } from '@vue/runtime-core'
 import { createWrapper } from './hoc-wrapper.ts'
 import {
   cleanUndefFields,
@@ -34,9 +35,11 @@ export function withProps<
       mergeExpose,
       name: 'withProps',
     }, {
-      mapProps(props) {
-        const defaultProps = getCallableResult(options, {} as any)
+      mapProps(__props) {
+        const props = unref(__props)
+        const defaultProps = unref(getCallableResult(options, {} as any))
         return {
+          ...props,
           ...defaultProps,
           ...cleanUndefFields(props),
         }

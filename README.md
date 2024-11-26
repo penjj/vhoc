@@ -11,11 +11,15 @@ Documentation: https://penjj.github.io/vhoc/
 Playground: https://stackblitz.com/edit/vitejs-vite-jqkxzj?file=src/App.vue
 
 ## Install
+
 ```bash
 pnpm i vhoc -S
 ```
 
 ## Usage
+
+<!-- eslint-skip -->
+
 ```ts
 import { withProps } from 'vhoc'
 
@@ -28,16 +32,18 @@ const MyInput = withProps(Input)({
 ```
 
 ## With unplugin-auto-import
+
+<!-- eslint-skip -->
+
 ```ts
 // vite.config.js
-import { VhocImports } from 'vhoc/imports'
+import { VhocImports } from "vhoc/imports";
 
 export default defineConfig({
   plugins: [
     AutoImport({
-      imports: [
-        VhocImports()
-      ]
-    })
-  ]
-})
+      imports: [VhocImports()],
+    }),
+  ],
+});
+```

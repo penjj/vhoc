@@ -190,7 +190,7 @@ export function cleanUndefFields<T extends Record<string, any>>(target: T): T {
 
   Object.keys(target).forEach((key) => {
     const value = target[key]
-    if (value !== undefined) {
+    if (typeof value !== 'undefined') {
       result[key as keyof T] = value
     }
   })

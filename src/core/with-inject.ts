@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'vue-component-type-helpers'
 import type { Component, ExposeOptions } from './utils.ts'
-import { computed, inject, type InjectionKey } from '@vue/runtime-core'
+import { computed, inject, type InjectionKey, unref } from '@vue/runtime-core'
 import { createWrapper } from './hoc-wrapper.ts'
 
 /**
@@ -30,15 +30,14 @@ export function withInject<
       mergeExpose,
       name: 'withInject',
     }, {
-      mapProps(props) {
+      mapProps(__props) {
+        const props = unref(__props)
         const injection = inject(injectionKey)
         const actualProps: Record<string, any> = {}
-
         for (const key in props) {
-          if (props[key] !== undefined)
+          if (typeof props[key] !== 'undefined')
             actualProps[key] = props[key]
         }
-
         return computed(() => ({
           ...injection,
           ...actualProps,

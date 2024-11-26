@@ -32,7 +32,9 @@ it('with model test', async () => {
   const wrapper = mount(component, {
     props: {
       'value': model.value,
-      'onUpdate:value': (value: string) => model.value = value,
+      'onUpdate:value': (value: string) => {
+        return model.value = value
+      },
     },
   })
 
