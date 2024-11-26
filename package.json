@@ -1,7 +1,7 @@
 {
   "name": "vhoc",
   "type": "module",
-  "version": "0.0.0-alpha.1",
+  "version": "0.0.0-alpha.2",
   "packageManager": "pnpm@9.9.0",
   "description": "Create higher order vue3 components.",
   "author": "penjj <peng.j.1995@gmail.com>",
@@ -38,7 +38,8 @@
     "test": "vitest",
     "dev:doc": "vitepress",
     "lint": "eslint --flag=unstable_ts_config .",
-    "lint:fix": "pnpm lint --fix"
+    "lint:fix": "pnpm lint --fix",
+    "release": "bumpp"
   },
   "dependencies": {
     "@vue/runtime-core": "^3.5.12",
@@ -49,6 +50,7 @@
     "@antfu/eslint-config": "^3.8.0",
     "@penjj/tsconfig": "^0.5.1",
     "@vue/test-utils": "^2.4.6",
+    "bumpp": "^9.8.1",
     "eslint": "^9.13.0",
     "happy-dom": "^15.7.4",
     "jiti": "^2.3.3",
