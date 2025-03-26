@@ -1,11 +1,10 @@
 import type { ComponentExposed } from 'vue-component-type-helpers'
+import type { Component, ExposeOptions, FnOr } from './utils.ts'
 import { unref } from '@vue/runtime-core'
 import { createWrapper } from './hoc-wrapper.ts'
 import {
   cleanUndefFields,
-  type Component,
-  type ExposeOptions,
-  type FnOr,
+
   getCallableResult,
 } from './utils.ts'
 

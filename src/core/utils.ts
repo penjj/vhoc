@@ -1,15 +1,9 @@
+import type { ComponentObjectPropsOptions, ComponentPublicInstance, EmitsOptions, ObjectEmitsOptions, Prop, Slot, SlotsType, VNodeProps, VNodeRef } from '@vue/runtime-core'
 import {
-  type ComponentObjectPropsOptions,
-  type ComponentPublicInstance,
-  type EmitsOptions,
+
   getCurrentInstance,
   isVNode,
-  type ObjectEmitsOptions,
-  type Prop,
-  type Slot,
-  type SlotsType,
-  type VNodeProps,
-  type VNodeRef,
+
 } from '@vue/runtime-core'
 import { extend, isArray, isFunction, isObject } from '@vue/shared'
 

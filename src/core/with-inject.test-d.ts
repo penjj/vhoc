@@ -1,4 +1,5 @@
-import { defineComponent, type InjectionKey } from '@vue/runtime-core'
+import type { InjectionKey } from '@vue/runtime-core'
+import { defineComponent } from '@vue/runtime-core'
 import { expectTypeOf, it } from 'vitest'
 import { withInject } from './with-inject.ts'
 

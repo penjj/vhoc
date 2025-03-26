@@ -1,6 +1,7 @@
+import type { Component, ExposeOptions } from './utils.ts'
 import { unref } from '@vue/runtime-core'
 import { createWrapper } from './hoc-wrapper.ts'
-import { type Component, type ExposeOptions, ownKeys } from './utils.ts'
+import { ownKeys } from './utils.ts'
 
 export type WithModelOptions<T> = Record<string, {
   get: (value: T) => T

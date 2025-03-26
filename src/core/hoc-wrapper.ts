@@ -11,8 +11,9 @@ import type {
   ComponentProps,
   ComponentSlots,
 } from 'vue-component-type-helpers'
+import type { Component, ExposeOptions } from './utils.ts'
 import { computed, defineComponent, h, unref } from '@vue/runtime-core'
-import { type Component, type ExposeOptions, mergeProps } from './utils.ts'
+import { mergeProps } from './utils.ts'
 
 export interface WrapComponentOptions extends ExposeOptions {
   props?: ComponentObjectPropsOptions

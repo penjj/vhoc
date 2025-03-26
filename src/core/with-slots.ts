@@ -1,8 +1,9 @@
 import type { ComponentExposed } from 'vue-component-type-helpers'
-import { createWrapper, type WrapComponentOptions } from './hoc-wrapper.ts'
+import type { WrapComponentOptions } from './hoc-wrapper.ts'
+import type { Component, FnOr } from './utils.ts'
+import { createWrapper } from './hoc-wrapper.ts'
 import {
-  type Component,
-  type FnOr,
+
   getCallableResult,
   mergeSlots,
 } from './utils.ts'

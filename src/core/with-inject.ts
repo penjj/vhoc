@@ -1,6 +1,7 @@
+import type { InjectionKey } from '@vue/runtime-core'
 import type { ComponentProps } from 'vue-component-type-helpers'
 import type { Component, ExposeOptions } from './utils.ts'
-import { computed, inject, type InjectionKey, unref } from '@vue/runtime-core'
+import { computed, inject, unref } from '@vue/runtime-core'
 import { createWrapper } from './hoc-wrapper.ts'
 
 /**
