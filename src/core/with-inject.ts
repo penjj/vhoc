@@ -3,6 +3,7 @@ import type { ComponentProps } from 'vue-component-type-helpers'
 import type { Component, ExposeOptions } from './utils.ts'
 import { computed, inject, unref } from '@vue/runtime-core'
 import { createWrapper } from './hoc-wrapper.ts'
+import { isUndefined } from './utils.ts'
 
 /**
  * Create a component with props, and inject `default` props to your component.
@@ -37,11 +38,11 @@ export function withInject<
         injection = inject(injectionKey)
         return context
       },
-      mapProps(__props) {
-        const props = unref(__props)
+      mapProps(_props) {
+        const props = unref(_props)
         const actualProps: Record<string, any> = {}
         for (const key in props) {
-          if (typeof props[key] !== 'undefined')
+          if (!isUndefined(props[key]))
             actualProps[key] = props[key]
         }
         return computed(() => ({

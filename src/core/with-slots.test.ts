@@ -1,3 +1,4 @@
+import type { SlotsType, VNode } from '@vue/runtime-core'
 import { defineComponent, h } from '@vue/runtime-core'
 import { mount } from '@vue/test-utils'
 import { expect, it } from 'vitest'
@@ -6,6 +7,11 @@ import { withSlots } from './with-slots.ts'
 it('with props test', async () => {
   const component = withSlots(
     defineComponent({
+      slots: {} as SlotsType<{
+        default: () => VNode
+        addonBefore: () => VNode
+        addonAfter: () => VNode
+      }>,
       template: `
         <button>
           <slot name="addon-before"></slot>
@@ -15,7 +21,7 @@ it('with props test', async () => {
       `,
     }),
   )({
-    default: () => 'Click Me',
+    default: () => `Click Me`,
   })
 
   const wrapper1 = mount(h(component, null, {

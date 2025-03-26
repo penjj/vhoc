@@ -42,6 +42,10 @@
     "lint:fix": "pnpm lint --fix",
     "release": "bumpp"
   },
+  "peerDependencies": {
+    "@vue/runtime-core": "^3.4.0",
+    "@vue/shared": "^3.4.0"
+  },
   "dependencies": {
     "@vue/runtime-core": "^3.5.13",
     "@vue/shared": "^3.5.13",

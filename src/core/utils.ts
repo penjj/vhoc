@@ -1,9 +1,7 @@
 import type { ComponentObjectPropsOptions, ComponentPublicInstance, EmitsOptions, ObjectEmitsOptions, Prop, Slot, SlotsType, VNodeProps, VNodeRef } from '@vue/runtime-core'
 import {
-
   getCurrentInstance,
   isVNode,
-
 } from '@vue/runtime-core'
 import { extend, isArray, isFunction, isObject } from '@vue/shared'
 
@@ -19,6 +17,8 @@ export function buildRuntimeProps(obj: any) {
   }
   return ret
 }
+
+export const isUndefined = (value: any): value is undefined => typeof value === 'undefined'
 
 /**
  * 把 ref 函数所指向的子组件的 expose 对象合并到当前组件
@@ -90,11 +90,7 @@ export type FnOr<T> = ((...args: any[]) => T) | T
  * invokeCallable(b) // 2
  * ```
  */
-export function getCallableResult<T>(
-  fnOr: FnOr<T>,
-  defaultValue?: T,
-  ...args: unknown[]
-) {
+export function getCallableResult<T>(fnOr: FnOr<T>, defaultValue?: T, ...args: unknown[]) {
   return isFunction(fnOr) ? fnOr(...args) : fnOr || defaultValue
 }
 
@@ -184,7 +180,7 @@ export function cleanUndefFields<T extends Record<string, any>>(target: T): T {
 
   Object.keys(target).forEach((key) => {
     const value = target[key]
-    if (typeof value !== 'undefined') {
+    if (!isUndefined(value)) {
       result[key as keyof T] = value
     }
   })

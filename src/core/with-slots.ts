@@ -1,3 +1,4 @@
+import type { VNodeChild } from '@vue/runtime-core'
 import type { ComponentExposed } from 'vue-component-type-helpers'
 import type { WrapComponentOptions } from './hoc-wrapper.ts'
 import type { Component, FnOr } from './utils.ts'
@@ -22,8 +23,11 @@ import {
  */
 export function withSlots<
   T extends Component,
-  Expose extends ComponentExposed<T> = ComponentExposed<T>,
-  Slots extends Expose['$slots'] = Expose['$slots'],
+  Expose extends ComponentExposed<T>,
+  RawSlots extends Expose['$slots'],
+  Slots extends {
+    [key in keyof RawSlots]: (...args: RawSlots[key] extends (...args: infer Args) => any ? Args : never) => VNodeChild
+  },
 >(
   Component: T,
   { mergeExpose, props }: WrapComponentOptions = {},
